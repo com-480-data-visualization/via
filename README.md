@@ -1,4 +1,4 @@
-# Project of Data Visualization (COM-480)
+# Project of Data Visualization (COM-480) – VIA
 
 | Student's name | SCIPER |
 | -------------- | ------ |
@@ -28,7 +28,9 @@ Please, fill the following sections about your project.
 The dataset we chose for our project is the GTFS timetable of the Swiss train network of this year. 
 It is made available on the opentransportdata.swiss platform.
 This provides us with a comprehensive overview of the train routes, schedules, connections and station location 
-in Switzerland. [Timetable 2026](https://data.opentransportdata.swiss/en/dataset/timetable-2026-gtfs2020)
+in Switzerland.
+
+[Timetable 2026](https://data.opentransportdata.swiss/en/dataset/timetable-2026-gtfs2020)
 
 #### Data structure
 
@@ -38,7 +40,7 @@ Some of the key files include all the stops, routes, trips, and stop times. The 
 
 [GTFS Reference](https://gtfs.org/documentation/schedule/reference/)
 
-#### Assess quality
+#### Quality assessing
 
 Since the dataset is provided by the official swiss public transportation authority and
 since it is being used by many applications and services, we can assume that 
@@ -72,6 +74,25 @@ The primary target audience includes train enthusiasts eager to explore the netw
 
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
+
+In the Jupyter Notebook located in `src/gtfs.ipynb`, we did a first basic processing of 
+the dataset. In particular, we managed to dynamically create the departure board
+for a given train station in Switzerland at a particular date and hour. For instance, 
+for the Renens VD train station at 09:00 AM, we get the following trains: 
+
+```
+09:04 IR95  Brig
+09:04 R3    Vallorbe
+09:06 RE33  Annemasse
+09:08 IC1   St. Gallen
+09:09 R9    Allaman
+09:11 IC51  Basel SBB
+09:16 R1    Grandson
+09:16 R2    Bex
+09:20 IC5   Lausanne
+09:21 R8    Lausanne
+...
+```
 
 ### Related work
 
