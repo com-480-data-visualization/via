@@ -78,7 +78,7 @@ The primary target audience includes train enthusiasts eager to explore the netw
 
 > - What others have already done with the data?
 
-This dataset is used in both the scientific and commercial domains. For instance, the smart ticketing company [Fairtiq](https://data.opentransportdata.swiss/en/showcase/fairtiq) uses timetables and transport networks data to optimize journey detection within their automatic fare billing application. On a more academic side, the [Institute for Transport Planning and Systems at ETH Zürich](https://data.opentransportdata.swiss/en/showcase/eth-zuerich) frequently uses this dataset to conduct studies on the Swiss railway network. Notably, they relied on it to analyze the repercussions of the 2017 Rastatt track subsidence, an incident that severely disrupted international rail freight traffic.
+This dataset is used in both the scientific and commercial domains. For instance, the smart ticketing company [Fairtiq](https://data.opentransportdata.swiss/en/showcase/fairtiq) uses timetables and transport networks data to optimize journey detection within their automatic fare billing application. On a more academic side, the [Institute for Transport Planning and Systems at ETH Zürich](https://data.opentransportdata.swiss/en/showcase/eth-zuerich) frequently uses this dataset to conduct studies on the Swiss railway network.
 
 Regarding its previous use within the Data Visualization course, a group of students carried out in 2025 a project called [Cartarail](https://github.com/com-480-data-visualization/Cartarail) aiming to visualize the impact of terrain geography and relief on the travel times of various railways connections.
 
