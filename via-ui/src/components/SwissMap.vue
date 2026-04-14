@@ -28,8 +28,8 @@ onMounted(() => {
     .attr('width', '100%')
     .attr('height', '100%')
 
-  d3.json('/switzerland-map.json').then((data: any) => {
-    const key = Object.keys(data.objects)[0]
+  d3.json('switzerland-map.json').then((data: any) => {
+    const key = Object.keys(data.objects)[0] as string
     const geoData = topojson.feature(data, data.objects[key]) as any
 
     const projection = d3.geoMercator().fitSize([width, height], geoData)
