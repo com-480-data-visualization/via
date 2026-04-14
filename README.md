@@ -126,6 +126,17 @@ We haven't used this dataset in a previous project
 
 **10% of the final grade**
 
+### How to run the prototype
+
+Ensure you have NPM installed on your machine. Then run the following commands:
+
+```shell
+cd via-ui
+npm install
+npm run dev
+```
+
+The website is accessible on [http://localhost:5173](http://localhost:5173).
 
 ## Milestone 3 (29th May, 5pm)
 

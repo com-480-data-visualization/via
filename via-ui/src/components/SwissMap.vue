@@ -75,8 +75,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="game-wrapper">
-    <h1>Swiss Map Game</h1>
+  <div class="wrapper">
+    <h1>Via</h1>
     <div ref="mapContainer" id="map-container">
       <div id="tooltip" class="tooltip"></div>
     </div>
@@ -84,7 +84,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.game-wrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
