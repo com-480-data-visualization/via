@@ -128,7 +128,7 @@ We haven't used this dataset in a previous project
 
 The milestone 2 document can be found [here](./COM_480_milestone_2.pdf).
 
-The deployed prototype can found found at [https://com-480-data-visualization.github.io/via/](https://com-480-data-visualization.github.io/via/).
+The deployed prototype can be found at [https://com-480-data-visualization.github.io/via/](https://com-480-data-visualization.github.io/via/).
 
 ### How to run the prototype
 
