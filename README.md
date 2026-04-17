@@ -126,6 +126,10 @@ We haven't used this dataset in a previous project
 
 **10% of the final grade**
 
+The milestone 2 document can be found [here](./COM_480_milestone_2.pdf).
+
+The deployed prototype can found found at [https://com-480-data-visualization.github.io/via/](https://com-480-data-visualization.github.io/via/).
+
 ### How to run the prototype
 
 Ensure you have NPM installed on your machine. Then run the following commands:
