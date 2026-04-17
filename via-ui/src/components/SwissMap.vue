@@ -8,14 +8,14 @@ const height = 600
 const mapContainer = ref<HTMLElement | null>(null)
 
 const cities = [
-  { name: 'Geneva', lat: 46.2044, lon: 6.1432 },
+  // { name: 'Geneva', lat: 46.2044, lon: 6.1432 },
   { name: 'Lausanne', lat: 46.5197, lon: 6.6323 },
-  { name: 'Zurich', lat: 47.3769, lon: 8.5417 },
-  { name: 'Bern', lat: 46.948, lon: 7.4474 },
-  { name: 'Lucerne', lat: 47.0502, lon: 8.3093 },
-  { name: 'St. Gallen', lat: 47.4245, lon: 9.3767 },
-  { name: 'Lugano', lat: 46.0037, lon: 8.9511 },
-  { name: 'Basel', lat: 47.5596, lon: 7.5886 },
+  // { name: 'Zurich', lat: 47.3769, lon: 8.5417 },
+  // { name: 'Bern', lat: 46.948, lon: 7.4474 },
+  // { name: 'Lucerne', lat: 47.0502, lon: 8.3093 },
+  // { name: 'St. Gallen', lat: 47.4245, lon: 9.3767 },
+  // { name: 'Lugano', lat: 46.0037, lon: 8.9511 },
+  // { name: 'Basel', lat: 47.5596, lon: 7.5886 },
 ]
 
 onMounted(() => {
@@ -76,7 +76,6 @@ onMounted(() => {
 
 <template>
   <div class="wrapper">
-    <h1>Via</h1>
     <div ref="mapContainer" id="map-container">
       <div id="tooltip" class="tooltip"></div>
     </div>
@@ -88,6 +87,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 #map-container {
