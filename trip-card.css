@@ -1,0 +1,178 @@
+
+/* Main Card Container */
+.trip-card {
+    background: var(--card-bg);
+    width: 320px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.trip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Header Section */
+.trip-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trip-route {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trip-time {
+    background-color: #e0f2f1;
+    color: var(--primary-color);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Visual Timeline (CSS Only) */
+.trip-visual {
+    padding: 20px;
+    position: relative;
+}
+
+.timeline-bar {
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.timeline-progress {
+    height: 100%;
+    width: 30%; /* Simulated progress */
+    background: var(--primary-color);
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+}
+
+.stop-dot {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 3px solid #e0e0e0;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.stop-dot.active {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+}
+
+.stop-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Dropdown / Details Section */
+.trip-details {
+    max-height: 0;
+    overflow: hidden;
+    background-color: #fafafa;
+    transition: max-height 0.3s ease-out;
+}
+
+.trip-card.open .trip-details {
+    max-height: 300px; /* Arbitrary large height for animation */
+    border-top: 1px solid #eee;
+}
+
+.stops-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.stop-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    transition: background 0.2s;
+}
+
+.stop-item:last-child {
+    border-bottom: none;
+}
+
+.stop-item:hover {
+    background-color: #f0f0f0;
+}
+
+.stop-time {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.select-btn {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.2s;
+}
+
+.stop-item:hover .select-btn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.stop-item.selected {
+    background-color: #e0f2f1;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.stop-item.selected .select-btn {
+    display: none;
+}
+
+.stop-item.selected::after {
+    content: '✓ Selected';
+    font-size: 0.75rem;
+}
+
+/* Icon for expand/collapse */
+.chevron {
+    transition: transform 0.3s;
+    color: var(--text-muted);
+}
+
+.trip-card.open .chevron {
+    transform: rotate(180deg);
+}
