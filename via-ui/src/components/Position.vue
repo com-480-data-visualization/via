@@ -11,6 +11,8 @@
 
 <style scoped>
 .position-card {
+  width: min(360px, 100%);
+  margin: 0 auto 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -20,7 +22,6 @@
   border-radius: 14px;
   box-shadow: 0 6px 14px rgba(22, 33, 62, 0.06);
   padding: 0.7rem 1.1rem 0.8rem;
-  margin-bottom: 1rem;
   min-width: 0;
 }
 

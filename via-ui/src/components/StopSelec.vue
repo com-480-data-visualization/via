@@ -16,7 +16,7 @@ const selectStop = (idx: number) => {
 </script>
 
 <template>
-  <div class="stopselec-root">
+  <div class="stopselec-root card-container">
     <div class="stopselec-header">
       <span class="stopselec-service">IC 5</span>
       <span class="stopselec-dest">→ Rorschach</span>
@@ -50,9 +50,17 @@ const selectStop = (idx: number) => {
 </template>
 
 <style scoped>
+.card-container {
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%);
+  border: 1px solid #d7d7d7;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(22, 33, 62, 0.06);
+  padding: 1rem;
+  margin: 0 auto;
+}
+
 .stopselec-root {
   width: min(340px, 100%);
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;

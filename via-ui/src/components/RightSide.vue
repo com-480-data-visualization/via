@@ -7,7 +7,7 @@ import StopSelec from '@/components/StopSelec.vue'
 <template>
 <div id="right-side">
   <Position/>
-  <!--<NextTrainSelec/>-->
+  <!-- <NextTrainSelec/> -->
       <StopSelec/>
 </div>
 </template>

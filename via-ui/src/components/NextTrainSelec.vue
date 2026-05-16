@@ -14,7 +14,7 @@ const selectCard = (id: number) => {
 </script>
 
 <template>
-  <div id="next-train-selec">
+  <div id="next-train-selec" class="card-container">
     <div class="train-list">
       <article
         v-for="train in trains"
@@ -45,7 +45,15 @@ const selectCard = (id: number) => {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 1rem 0 1.5rem;
+}
+
+.card-container {
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%);
+  border: 1px solid #d7d7d7;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(22, 33, 62, 0.06);
+  padding: 1rem;
+  margin: 0 auto;
 }
 
 .train-list {
