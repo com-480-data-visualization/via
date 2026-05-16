@@ -9,7 +9,6 @@ import RightSide from '@/components/RightSide.vue'
     <div class="app-title-wrap">
       <span class="app-title-tag">Swiss train trip simulator</span>
       <h1 class="app-title">Via</h1>
-      <!-- <p class="app-subtitle">Swiss trip companion</p> -->
     </div>
   </header>
 

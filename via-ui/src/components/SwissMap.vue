@@ -13,7 +13,6 @@ type TripCity = {
   lon: number
 }
 
-// Ordered trip cities: each city is connected to the next one.
 const cities: TripCity[] = [
   { name: 'Genève', lat: 46.2044, lon: 6.1432 },
   { name: 'Lausanne', lat: 46.5197, lon: 6.6323 },
