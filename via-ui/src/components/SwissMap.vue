@@ -7,19 +7,25 @@ const width = 800
 const height = 600
 const mapContainer = ref<HTMLElement | null>(null)
 
-const cities = [
-  // { name: 'Geneva', lat: 46.2044, lon: 6.1432 },
+type TripCity = {
+  name: string
+  lat: number
+  lon: number
+}
+
+// Ordered trip cities: each city is connected to the next one.
+const cities: TripCity[] = [
+  { name: 'Genève', lat: 46.2044, lon: 6.1432 },
   { name: 'Lausanne', lat: 46.5197, lon: 6.6323 },
-  // { name: 'Zurich', lat: 47.3769, lon: 8.5417 },
-  // { name: 'Bern', lat: 46.948, lon: 7.4474 },
-  // { name: 'Lucerne', lat: 47.0502, lon: 8.3093 },
-  // { name: 'St. Gallen', lat: 47.4245, lon: 9.3767 },
-  // { name: 'Lugano', lat: 46.0037, lon: 8.9511 },
-  // { name: 'Basel', lat: 47.5596, lon: 7.5886 },
+  { name: 'Yverdon-Les-Bains', lat: 46.7785, lon: 6.6412 },
+  { name: 'Neuchatel', lat: 46.9896, lon: 6.9293 },
+  { name: 'Solothurn', lat: 47.2088, lon: 7.537 },
 ]
 
 onMounted(() => {
   if (!mapContainer.value) return
+
+  d3.select(mapContainer.value).selectAll('svg').remove()
 
   const svg = d3
     .select(mapContainer.value)
@@ -39,29 +45,81 @@ onMounted(() => {
       .append('path')
       .datum(geoData)
       .attr('d', path)
-      .attr('fill', '#e0e0e0')
-      .attr('stroke', '#333')
+      .attr('fill', '#efefef')
+      .attr('stroke', '#666')
       .attr('stroke-width', 1)
+
+    const projectedCities = cities
+      .map((city) => {
+        const point = projection([city.lon, city.lat])
+        if (!point) return null
+        return {
+          ...city,
+          x: point[0],
+          y: point[1],
+        }
+      })
+      .filter((d): d is TripCity & { x: number; y: number } => d !== null)
+
+    const cityLinks = projectedCities
+      .map((city, idx) => {
+        const nextCity = projectedCities[idx + 1]
+        if (!nextCity) return null
+        return {
+          source: city,
+          target: nextCity,
+        }
+      })
+      .filter((d): d is { source: TripCity & { x: number; y: number }; target: TripCity & { x: number; y: number } } => d !== null)
+
+    svg
+      .append('g')
+      .attr('class', 'trip-links')
+      .selectAll('line')
+      .data(cityLinks)
+      .enter()
+      .append('line')
+      .attr('x1', (d) => d.source.x)
+      .attr('y1', (d) => d.source.y)
+      .attr('x2', (d) => d.target.x)
+      .attr('y2', (d) => d.target.y)
+      .attr('stroke', '#d60f11')
+      .attr('stroke-width', 5)
+      .attr('stroke-linecap', 'round')
+      .attr('opacity', 0.9)
 
     const circles = svg
       .selectAll('.city')
-      .data(cities)
+      .data(projectedCities)
       .enter()
       .append('circle')
       .attr('class', 'city')
-      .attr('r', 8)
+      .attr('r', 7)
       .attr('fill', '#d93025')
       .attr('stroke', '#fff')
-      .attr('stroke-width', 2)
-      .attr('cx', (d) => projection([d.lon, d.lat])![0])
-      .attr('cy', (d) => projection([d.lon, d.lat])![1])
+      .attr('stroke-width', 2.5)
+      .attr('cx', (d) => d.x)
+      .attr('cy', (d) => d.y)
       .style('cursor', 'pointer')
+
+    svg
+      .selectAll('.city-label')
+      .data(projectedCities)
+      .enter()
+      .append('text')
+      .attr('class', 'city-label')
+      .attr('x', (d) => d.x + 10)
+      .attr('y', (d) => d.y - 10)
+      .text((d, i) => `${i + 1}. ${d.name}`)
+      .attr('font-size', 14)
+      .attr('font-weight', 700)
+      .attr('fill', '#111827')
 
     const tooltip = d3.select('#tooltip')
 
     circles
       .on('mouseover', (event, d) => {
-        tooltip.style('opacity', 1).html(`<strong>${d.name}</strong>`)
+        tooltip.style('opacity', 1).html(`<strong>${d.name}</strong>`) 
       })
       .on('mousemove', (event) => {
         const [x, y] = d3.pointer(event, mapContainer.value)
@@ -86,18 +144,22 @@ onMounted(() => {
 .wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
 }
 
 #map-container {
-  width: 800px;
-  height: 600px;
-  background: #fff;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%);
   position: relative;
-  border: 1px solid #ccc;
+  border: 1px solid #d7d7d7;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(22, 33, 62, 0.06);
   overflow: hidden;
-  padding: 50px;
+  padding: 24px;
 }
 
 .tooltip {

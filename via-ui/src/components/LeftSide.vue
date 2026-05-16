@@ -6,13 +6,17 @@ import SwissMap from "@/components/SwissMap.vue"
 
 <template>
   <div id="left-side">
-    <TripInfo/>
-    <SwissMap/>
+    <TripInfo id="trip-info"/>
+    <SwissMap id="map"/>
   </div>
 </template>
 
 <style scoped>
  #left-side{
   width: 70%;
+ }
+
+ #map{
+  margin-top: 10px;
  }
 </style>
