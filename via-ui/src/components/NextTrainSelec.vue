@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useVia } from '@/composables/useVia';
 
-const trains = [
-  { id: 1, service: 'IC 5', destination: '→ Rorschach', departure: '11:34' },
-  { id: 2, service: 'IC 7', destination: '→ Zürich HB', departure: '11:41' },
-  { id: 3, service: 'RE 12', destination: '→ St. Gallen', departure: '11:55' },
-  { id: 4, service: 'IC 5', destination: '→ Chur', departure: '12:08' },
-];
-const selectedId = ref(1);
+const { state, selectTrain } = useVia();
+
 const selectCard = (id: number) => {
-  selectedId.value = id;
+  selectTrain(id);
 };
 </script>
 
@@ -17,19 +12,19 @@ const selectCard = (id: number) => {
   <div id="next-train-selec" class="card-container">
     <div class="train-list">
       <article
-        v-for="train in trains"
+        v-for="train in state.nextStarts"
         :key="train.id"
-        :class="['train-card', { 'train-card--selected': train.id === selectedId }]"
+        :class="['train-card', { 'train-card--selected': train.stop !== null }]"
         @click="selectCard(train.id)"
       >
         <div class="train-card__row">
           <span class="train-card__service">{{ train.service }}</span>
-          <span class="train-card__destination">{{ train.destination }}</span>
+          <span class="train-card__destination">→ {{ train.destination }}</span>
           <span class="train-card__time">{{ train.departure }}</span>
         </div>
 
         <button
-          v-if="train.id === selectedId"
+          v-if="train.stop !== null"
           class="train-card__confirm"
           type="button"
         >

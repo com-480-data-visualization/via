@@ -1,47 +1,41 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-// Placeholder data for stops
-const stops = [
-  { name: 'Yverdon-Les-Bains', time: '12:00' },
-  { name: 'Neuchâtel', time: '12:21' },
-  { name: 'Biel/Bienne', time: '12:42' },
-  { name: 'Solothurn', time: '12:59' },
-  { name: 'Olten', time: '13:18' },
-  { name: 'Aarau', time: '13:29' },
-];
-const selectedIdx = ref<number|null>(null);
-const selectStop = (idx: number) => {
-  selectedIdx.value = idx;
-};
+import { useVia } from '@/composables/useVia';
+import { computed } from 'vue';
+
+const { state, selectStop } = useVia();
+
+const selectedTrain = computed(() => {
+  return state.value.nextStarts.find((t: any) => t.stop !== null);
+});
 </script>
 
 <template>
   <div class="stopselec-root card-container">
-    <div class="stopselec-header">
-      <span class="stopselec-service">IC 5</span>
-      <span class="stopselec-dest">→ Rorschach</span>
-      <span class="stopselec-depart">Departure: 11:34</span>
+    <div class="stopselec-header" v-if="selectedTrain">
+      <span class="stopselec-service">{{ selectedTrain.service }}</span>
+      <span class="stopselec-dest">→ {{ selectedTrain.destination }}</span>
+      <span class="stopselec-depart">Departure: {{ selectedTrain.departure }}</span>
     </div>
     <div class="stopselec-timeline">
       <div class="stopselec-timeline-bar"></div>
       <div class="stopselec-stops">
         <div
-          v-for="(stop, i) in stops"
+          v-for="(stop, i) in state.possibleStops"
           :key="i"
           class="stopselec-stop-row"
         >
           <div class="stopselec-dot"></div>
           <div
             class="stopselec-stop-card"
-            :class="{ 'stopselec-stop-card--selected': selectedIdx === i }"
+            :class="{ 'stopselec-stop-card--selected': selectedTrain?.stop?.name === stop.name }"
             @click="selectStop(i)"
             tabindex="0"
             role="button"
-            :aria-pressed="selectedIdx === i"
+            :aria-pressed="selectedTrain?.stop?.name === stop.name"
           >
             <div class="stopselec-stop-name">{{ stop.name }}</div>
             <div class="stopselec-stop-time">Arrival: {{ stop.time }}</div>
-            <button v-if="selectedIdx === i" class="stopselec-confirm">Confirm</button>
+            <button v-if="selectedTrain?.stop?.name === stop.name" class="stopselec-confirm">Confirm</button>
           </div>
         </div>
       </div>

@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import { useVia } from '@/composables/useVia';
+import { computed } from 'vue';
+
+const { state } = useVia();
+
+const currentCity = computed(() => {
+  // Find the first train with a departure city
+  const train = state.value.nextStarts[0];
+  return train?.departureCity?.name || 'Unknown';
+});
 </script>
 
 
 <template>
   <div class="position-card">
     <span class="position-label">Current position</span>
-    <span class="position-name">Lausanne</span>
+    <span class="position-name">{{ currentCity }}</span>
   </div>
 </template>
 

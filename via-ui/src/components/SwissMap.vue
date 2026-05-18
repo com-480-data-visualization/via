@@ -1,25 +1,41 @@
 <script setup lang="ts">
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
+import { useVia } from '@/composables/useVia'
+import type {Train} from '@/composables/viaTypes'
+
+const { state } = useVia()
 
 const width = 800
 const height = 600
 const mapContainer = ref<HTMLElement | null>(null)
 
-type TripCity = {
-  name: string
-  lat: number
-  lon: number
-}
+// Build cities list from the trip data
+const cities = computed(() => {
+  const citiesSet = new Set<string>()
+  const cityList: { name: string; lat: number; lon: number }[] = []
 
-const cities: TripCity[] = [
-  { name: 'Genève', lat: 46.2044, lon: 6.1432 },
-  { name: 'Lausanne', lat: 46.5197, lon: 6.6323 },
-  { name: 'Yverdon-Les-Bains', lat: 46.7785, lon: 6.6412 },
-  { name: 'Neuchatel', lat: 46.9896, lon: 6.9293 },
-  { name: 'Solothurn', lat: 47.2088, lon: 7.537 },
-]
+  // Add departure city from first train
+  const firstTrain = state.value.nextStarts[0]
+  if (firstTrain?.departureCity) {
+    const dept = firstTrain.departureCity
+    cityList.push(dept)
+    citiesSet.add(dept.name)
+  }
+
+  // Add all stops from trains that have them
+  state.value.nextStarts.forEach((train: Train) => {
+    if (train.stop && !citiesSet.has(train.stop.name)) {
+      // Find the city from departureCity if available, or create a placeholder
+      const city = { name: train.stop.name, lat: 46.5, lon: 6.5 } // Placeholder coords
+      cityList.push(city)
+      citiesSet.add(train.stop.name)
+    }
+  })
+
+  return cityList
+})
 
 onMounted(() => {
   if (!mapContainer.value) return
@@ -48,7 +64,7 @@ onMounted(() => {
       .attr('stroke', '#666')
       .attr('stroke-width', 1)
 
-    const projectedCities = cities
+    const projectedCities = cities.value
       .map((city) => {
         const point = projection([city.lon, city.lat])
         if (!point) return null
@@ -58,7 +74,7 @@ onMounted(() => {
           y: point[1],
         }
       })
-      .filter((d): d is TripCity & { x: number; y: number } => d !== null)
+      .filter((d): d is { name: string; lat: number; lon: number; x: number; y: number } => d !== null)
 
     const cityLinks = projectedCities
       .map((city, idx) => {
@@ -69,7 +85,7 @@ onMounted(() => {
           target: nextCity,
         }
       })
-      .filter((d): d is { source: TripCity & { x: number; y: number }; target: TripCity & { x: number; y: number } } => d !== null)
+      .filter((d): d is { source: { name: string; lat: number; lon: number; x: number; y: number }; target: { name: string; lat: number; lon: number; x: number; y: number } } => d !== null)
 
     svg
       .append('g')

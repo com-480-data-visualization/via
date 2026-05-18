@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import Clock from '@/components/Clock.vue'
+import { useVia } from '@/composables/useVia'
+import { computed } from 'vue'
+import type { Train, ViaState } from '@/composables/viaTypes'
+
+const { state, selectTrain, selectStop } = useVia()
+
+const routeDisplay = computed(() => {
+  const firstTrain = state.value.nextStarts[0]
+  if (!firstTrain) return 'No route'
+  const from = firstTrain.departureCity?.name || 'Unknown'
+  const to = firstTrain.stop?.name || firstTrain.destination || 'Unknown'
+  return `${from} → ${to}`
+})
 </script>
 
 <template>
-<div id="trip-info">
+  <div id="trip-info">
   <div class="trip-meta">
-    <p class="trip-route">Genève → Leimbach AG</p>
+    <p class="trip-route">{{ routeDisplay }}</p>
 
     <div class="trip-kpis">
       <div class="trip-kpi">
@@ -21,7 +34,7 @@ import Clock from '@/components/Clock.vue'
   </div>
 
   <div class="trip-clock">
-    <Clock :hour="6" :minute="15" />
+    <Clock :hour="state.hour" :minute="state.minute" />
   </div>
 </div>
 </template>
